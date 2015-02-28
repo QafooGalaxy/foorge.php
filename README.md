@@ -42,8 +42,8 @@ The minimal example:
 
     - hosts: app
       roles:
-        - role: qafoo-base
-        - role: qafoo-php
+        - role: "qafoo.base"
+        - role: "qafoo.php"
 
 This defaults to using a single pool called "www" listening on unix socket
 "/var/run/php5-fpm.sock" using all the FPM configuration that is used in Ubuntu
@@ -53,8 +53,8 @@ A full example of all the possible development+pool related configuration option
 
     - hosts: app
       roles:
-        - role: qafoo-base
-        - role: qafoo-php
+        - role: "qafoo.base"
+        - role: "qafoo.php"
           extensions:
             - php5-gd
             - php5-imagick
