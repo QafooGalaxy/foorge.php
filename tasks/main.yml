@@ -4,16 +4,18 @@
   with_items:
     - php5-fpm
     - php5-cli
+  when: "'php' in group_names"
   notify: "Restart PHP5-FPM"
 
 - name: "Install PHP Extensions"
   apt: pkg={{ item }} state=latest
-  with_items: extensions
+  with_items: php_extensions
+  when: "'php' in group_names"
   notify: "Restart PHP5-FPM"
 
 - name: "Install PHP Dev-Extensions"
   apt: pkg={{ item }} state=latest
-  with_items: extensions
+  with_items: php_extensions
   when: "'development' in group_names"
   notify: "Restart PHP5-FPM"
 
@@ -21,10 +23,12 @@
   template: >
     src=global.ini.j2
     dest=/etc/php5/mods-available/global.ini
+  when: "'php' in group_names"
   notify: "Restart PHP5-FPM"
 
 - name: "Enable Global php.ini Configuration"
   command: php5enmod -s ALL global
+  when: "'php' in group_names"
   notify: "Restart PHP5-FPM"
 
 - name: "Create error_log directories"
@@ -34,17 +38,20 @@
     group={{ item.group|default(fpm_default_group) }}
     state=directory
     mode=0750
-  with_items: pools
+  with_items: php_pools
+  when: "'php' in group_names"
 
 - name: "Register error_log rotations"
   template: >
     src=logrotate.j2
     dest=/etc/logrotate.d/php-fpm-{{ item.name }}
-  with_items: pools
+  with_items: php_pools
+  when: "'php' in group_names"
 
 - name: "Configure FPM Pools"
   template: >
     src=pool.conf.j2
     dest=/etc/php5/fpm/pool.d/{{ item.name }}.conf
-  with_items: pools
+  with_items: php_pools
   notify: "Restart PHP5-FPM"
+  when: "'php' in group_names"

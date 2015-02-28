@@ -9,7 +9,8 @@ using FastCGI (via PHP-FPM).
 Requirements
 ------------
 
-Ubuntu Server
+- Ubuntu Server
+- Servers with this role must have the Ansible group `php`
 
 Role Variables
 --------------
@@ -61,16 +62,16 @@ A full example of all the possible development+pool related configuration option
       roles:
         - role: "qafoo.base"
         - role: "qafoo.php"
-          extensions:
+          php_extensions:
             - php5-gd
             - php5-imagick
-          dev_extensions:
+          php_dev_extensions:
             - php5-xdebug
-          ini_settings:
+          php_ini_settings:
             - { name : "date.timezone", value: "UTC" }
-          dev_ini_settings:
+          php_dev_ini_settings:
             - { name : "xdebug.enable", value: "1" }
-          pools:
+          php_pools:
             - { name: "www" } # defaults to /var/run/php5-fpm-www.sock
             - { name: "www2", user: "not-www-data", pm: "static", pm_max_children: 200, listen: "127.0.0.1:9000" }
             - name: "www3"

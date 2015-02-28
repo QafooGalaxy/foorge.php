@@ -1,11 +1,11 @@
 ; {{ ansible_managed }}
-{% for setting in ini_settings %}
+{% for setting in php_ini_settings %}
 {{ setting.name }}={{ setting.value }}
 {% endfor %}
 
 {% if 'development' in group_names %}
 ; Development Only Settings
-{% for setting in dev_ini_settings %}
+{% for setting in php_dev_ini_settings %}
 {{ setting.name }}={{ setting.value }}
 {% endfor %}
 {% endif %}
