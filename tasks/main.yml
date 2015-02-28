@@ -1,0 +1,35 @@
+---
+- name: "Install PHP, PHP-FPM, PHP-CLI"
+  apt: pkg={{ item }} state=latest
+  with_items:
+    - php5-fpm
+    - php5-cli
+  notify: "Restart PHP5-FPM"
+
+- name: "Install PHP Extensions"
+  apt: pkg={{ item }} state=latest
+  with_items: extensions
+  notify: "Restart PHP5-FPM"
+
+- name: "Install PHP Dev-Extensions"
+  apt: pkg={{ item }} state=latest
+  with_items: extensions
+  when: "'development' in group_names"
+  notify: "Restart PHP5-FPM"
+
+- name: "Global php.ini Configuration"
+  template: >
+    src=global.ini.j2
+    dest=/etc/php5/mods-available/global.ini
+  notify: "Restart PHP5-FPM"
+
+- name: "Enable Global php.ini Configuration"
+  command: php5enmod -s ALL global
+  notify: "Restart PHP5-FPM"
+
+- name: "Configure FPM Pools"
+  template: >
+    src=pool.conf.j2
+    dest=/etc/php5/fpm/pool.d/{{ item.name }}.conf
+  with_items: pools
+  notify: "Restart PHP5-FPM"
