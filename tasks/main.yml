@@ -27,6 +27,15 @@
   command: php5enmod -s ALL global
   notify: "Restart PHP5-FPM"
 
+- name: "Create Log Directories"
+  file: >
+    path=/var/log/php/{{ item.name }}
+    owner={{ item.user|default(fpm_default_user) }}
+    group={{ item.group|default(fpm_default_group) }}
+    state=directory
+    mode=0750
+  with_items: pools
+
 - name: "Configure FPM Pools"
   template: >
     src=pool.conf.j2

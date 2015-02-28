@@ -21,7 +21,9 @@ These are the default role variables:
     dev_extensions: []
     ini_settings: 
       - { name: "date.timezone", value: "UTC" }
-    dev_ini_settings: []
+      - { name: "display_errors", value: "off" }
+    dev_ini_settings:
+      - { name: "display_errors", value: "on" }
     pools:
       - { name: "www", listen: "/var/run/php5-fpm.sock" }
     fpm_default_listen_mode: '600'
