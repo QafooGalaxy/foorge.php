@@ -1,7 +1,8 @@
 ---
 extensions: []
 dev_extensions: []
-ini_settings: []
+ini_settings: 
+  - { name: "date.timezone", value: "UTC" }
 dev_ini_settings: []
 pools:
   - { name: "www", listen: "/var/run/php5-fpm.sock" }
