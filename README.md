@@ -49,7 +49,11 @@ The minimal example:
 
 This defaults to using a single pool called "www" listening on unix socket
 "/var/run/php5-fpm.sock" using all the FPM configuration that is used in Ubuntu
-default FPM installation. It also sets the INI configuration "date.timezone = UTC".
+default FPM installation. It also sets the INI configuration `"date.timezone = UTC"`.
+
+For every pool a log file with php errors will be placed under
+`/var/log/php/{poolname}/error.log` and a logrotate script will be generated to
+cleanup these log files.
 
 A full example of all the possible development+pool related configuration options:
 

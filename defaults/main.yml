@@ -16,3 +16,5 @@ fpm_default_pm_max_children: 5
 fpm_default_pm_start_servers: 2
 fpm_default_pm_min_spare_servers: 1
 fpm_default_pm_max_spare_servers: 3
+fpm_error_logrotate_files: 12
+fpm_error_logrotate_interval: 'weekly'

@@ -1,0 +1,12 @@
+/var/log/php/{{ item.name }}/error.log {
+	rotate {{ fpm_error_logrotate_files }}
+	{{ fpm_error_logrotate_interval }}
+	missingok
+	notifempty
+	compress
+	delaycompress
+    create 640 {{ item.user|default(fpm_default_user) }} {{ item.group|default(fpm_default_group) }}
+	postrotate
+		invoke-rc.d php5-fpm reopen-logs > /dev/null
+	endscript
+}
