@@ -10,7 +10,6 @@ Requirements
 ------------
 
 - Ubuntu Server
-- Servers with this role must have the Ansible group `php`
 
 Role Variables
 --------------
