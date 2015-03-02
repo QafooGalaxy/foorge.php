@@ -48,3 +48,28 @@
     dest=/etc/php5/fpm/pool.d/{{ item.name }}.conf
   with_items: php_pools
   notify: "Restart PHP5-FPM"
+
+- name: "Register Sockets with Consul"
+  command: >
+      curl -d"{{ item.listen|default("/var/run/php5-fpm-{{ item.name }}.sock") }}" -XPUT "http://localhost:8500/v1/kv/service/php-fpm/pools/{{ item.name }}"
+  with_items: php_pools
+
+# File must be writeable to consul process
+- name: "Touch env.pool file for consul-template"
+  file: >
+      path=/etc/php5/fpm/pool.d/consul.conf
+      owner=consul
+      group=consul
+      state=touch
+      mode=0644
+
+- name: "Register consul-template for Environment Variables"
+  copy: src=php-fpm.ctmpl dest=/opt/consul/php-fpm.ctmpl
+
+- name: "Register consul-template php-fpm template"
+  copy: src=php-fpm.hcl dest=/etc/consul.template.d/php-fpm.hcl
+  register: php_fpm_hcl
+
+- name: "Restart consul.template"
+  service: name=consul-template state=restarted
+  when: php_fpm_hcl|changed

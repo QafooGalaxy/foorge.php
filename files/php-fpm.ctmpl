@@ -1,0 +1,5 @@
+{{range $pool := tree "service/php-fpm/pools"}}
+[{{ $pool.Key }}]
+{{ range $env := tree (printf "%s%s" "apps/" $pool.Key) }}env[{{ $env.Key|toUpper|replaceAll "/" "_" }}]="{{ $env.Value }}"
+{{end}}
+{{end}}
