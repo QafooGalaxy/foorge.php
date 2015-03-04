@@ -1,8 +1,7 @@
-# {{ ansible_managed }}
-[{{ item.name }}]
+[{{ item.app }}]
 user = {{ item.user|default(fpm_default_user) }}
 group = {{ item.group|default(fpm_default_group) }}
-listen = {{ item.listen|default("/var/run/php5-fpm-{{ item.name }}.sock") }}
+listen = {{ item.listen|default("/var/run/php5-fpm-{{ item.app }}.sock") }}
 
 listen.owner = {{ item.user|default(fpm_default_user) }}
 listen.group = {{ item.group|default(fpm_default_group) }}
@@ -14,7 +13,7 @@ pm.start_servers = {{ item.pm_start_servers|default(fpm_default_pm_start_servers
 pm.min_spare_servers = {{ item.pm_min_spare_servers|default(fpm_default_pm_min_spare_servers) }}
 pm.max_spare_servers = {{ item.pm_max_spare_servers|default(fpm_default_pm_max_spare_servers) }}
 
-php_admin_value[error_log] = /var/log/php/{{ item.name }}/error.log
+php_admin_value[error_log] = /var/log/php/{{ item.app }}/error.log
 php_admin_flag[log_errors] = on
 
 {% for option in item.options|default([]) %}
@@ -36,4 +35,3 @@ php_admin_flag[{{ option.name }}]={{ option.value }}
 {% for option in item.php_flag|default([]) %}
 php_flag[{{ option.name }}]={{ option.value }}
 {% endfor %}
-

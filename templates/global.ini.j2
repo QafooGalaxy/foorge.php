@@ -1,4 +1,3 @@
-; {{ ansible_managed }}
 {% for setting in php_ini_settings %}
 {{ setting.name }}={{ setting.value }}
 {% endfor %}
