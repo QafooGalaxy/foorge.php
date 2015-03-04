@@ -54,15 +54,6 @@
       curl -d"{{ item.listen|default("/var/run/php5-fpm-{{ item.name }}.sock") }}" -XPUT "http://localhost:8500/v1/kv/service/php-fpm/pools/{{ item.name }}"
   with_items: php_pools
 
-# File must be writeable to consul process
-- name: "Touch env.pool file for consul-template"
-  file: >
-      path=/etc/php5/fpm/pool.d/consul.conf
-      owner=consul
-      group=consul
-      state=touch
-      mode=0644
-
 - name: "Register consul-template for Environment Variables"
   copy: src=php-fpm.ctmpl dest=/opt/consul/php-fpm.ctmpl
 

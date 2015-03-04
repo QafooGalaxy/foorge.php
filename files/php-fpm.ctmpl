@@ -1,9 +1,5 @@
 {{range $pool := tree "service/php-fpm/pools"}}
 [{{ $pool.Key }}]
-# global environment variables
-{{ range $env := tree "apps/_global" }}env[{{ $env.Key|toUpper|replaceAll "/" "_" }}]="{{ $env.Value }}"
-{{end}}
-# app environment variables
 {{ range $env := tree (printf "%s%s" "apps/" $pool.Key) }}env[{{ $env.Key|toUpper|replaceAll "/" "_" }}]="{{ $env.Value }}"
 {{end}}
 {{end}}
