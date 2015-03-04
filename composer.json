@@ -1,0 +1,10 @@
+{
+    "name": "qafoogalaxy/foorge.php",
+    "description": "PHP + FPM applicatation setup for a Foorge Cluster",
+    "license": "MIT",
+    "type": "ansible-role",
+    "require": {
+        "qafoogalaxy/installer": "@stable",
+        "qafoogalaxy/foorge.base": "@stable"
+    }
+}
