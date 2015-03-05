@@ -1,12 +1,12 @@
 ---
-extensions: []
-dev_extensions: []
-ini_settings: 
+php_extensions: []
+php_dev_extensions: []
+php_ini_settings: 
   - { name: "date.timezone", value: "UTC" }
   - { name: "display_errors", value: "off" }
-dev_ini_settings:
+php_dev_ini_settings:
   - { name: "display_errors", value: "on" }
-pools:
+php_pools:
   - { name: "www", listen: "/var/run/php5-fpm.sock" }
 fpm_default_listen_mode: '600'
 fpm_default_user: 'www-data'
