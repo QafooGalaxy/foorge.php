@@ -46,6 +46,8 @@ The minimal example:
       roles:
         - role: "qafoo.base"
         - role: "qafoo.php"
+          php_pools:
+            - { app: "default" }
 
 This defaults to using a single pool called "www" listening on unix socket
 "/var/run/php5-fpm.sock" using all the FPM configuration that is used in Ubuntu
@@ -71,9 +73,9 @@ A full example of all the possible development+pool related configuration option
           php_dev_ini_settings:
             - { name : "xdebug.enable", value: "1" }
           php_pools:
-            - { name: "www" } # defaults to /var/run/php5-fpm-www.sock
-            - { name: "www2", user: "not-www-data", pm: "static", pm_max_children: 200, listen: "127.0.0.1:9000" }
-            - name: "www3"
+            - { app: "wordpress" } # defaults to /var/run/php5-fpm-wordpress.sock
+            - { app: "magento", user: "not-www-data", pm: "static", pm_max_children: 200, listen: "127.0.0.1:9000" }
+            - app: "drupal"
               options:
                 - { name: "request_terminate_timeout": "30s"}
               env:

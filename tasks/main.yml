@@ -6,6 +6,9 @@
     - php5-cli
   notify: "Restart PHP5-FPM"
 
+- name: "Remove default php-fpm pool"
+  file: path=/etc/php5/fpm/pool.d/www.conf state=absent
+
 - name: "Install PHP Extensions"
   apt: pkg={{ item }} state=latest
   with_items: php_extensions
