@@ -1,7 +1,7 @@
 [{{ item.app }}]
 user = {{ item.user|default(fpm_default_user) }}
 group = {{ item.group|default(fpm_default_group) }}
-listen = {{ item.listen|default("/var/run/php5-fpm-' ~ item.app ~ '.sock") }}
+listen = {{ item.listen|default("/var/run/php5-fpm-" ~ item.app ~ ".sock") }}
 
 listen.owner = {{ item.user|default(fpm_default_user) }}
 listen.group = {{ item.group|default(fpm_default_group) }}
